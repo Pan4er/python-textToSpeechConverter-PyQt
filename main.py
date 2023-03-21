@@ -23,6 +23,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.playAudioBtnDocs.clicked.connect(self.playAudio)
         self.stopAudioBtnDocs.clicked.connect(self.stopAudio)
         self.saveAudioBtnDocs.clicked.connect(self.saveAudio)
+        self.plainTextEdit.textChanged.connect(self.textAreaChanged)
 
         self.loadingTimer = QTimer()
         self.loadingTimer.setInterval(10)
@@ -31,6 +32,8 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
         self.dialCw = True
         self.dial.setEnabled(False)
+
+        self.isAudioLoaded = False
 
     def dialSpin(self):
 
@@ -47,7 +50,10 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
 
 
-
+    def textAreaChanged(self):
+        self.isAudioLoaded = False
+        tts.stop()
+        tts.flushTemps()
 
     def getTextFromFile(self):
         self.cleanText()
@@ -68,6 +74,9 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
     def cleanText(self):
         self.plainTextEdit.clear()
+        tts.stop()
+        tts.flushTemps()
+        self.isAudioLoaded = False
 
 
     def resizeEvent(self, event):
@@ -86,17 +95,27 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         alert.exec_()
 
     def playAudio(self):
-        tts.stop()
-        if (self.plainTextEdit.toPlainText() != ""):
-            self.worker = self.WavGenerationThread(self.plainTextEdit.toPlainText())
-            self.worker.start()
-            self.stackedWidget.setCurrentIndex(2)
-            self.worker.finished.connect(self.threadFinishedEvent)
+        if (self.isAudioLoaded == False):
+            tts.stop()
+            if (self.plainTextEdit.toPlainText() != ""):
+                self.worker = self.WavGenerationThread(self.plainTextEdit.toPlainText())
+                self.worker.start()
+                self.stackedWidget.setCurrentIndex(2)
+                self.worker.finished.connect(self.threadFinishedEvent)
+            else:
+                pass
+        else:
+            tts.unpause()
+
 
 
 
     def stopAudio(self):
-        tts.stop()
+        if (self.isAudioLoaded == True):
+            tts.pause()
+        else:
+            tts.stop()
+
 
 
     class WavGenerationThread(QThread):
@@ -110,14 +129,21 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def threadFinishedEvent(self):
         self.stackedWidget.setCurrentIndex(0)
         tts.play()
+        self.isAudioLoaded = True
 
     def saveAudio(self):
         try:
             if os.path.exists("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin())):
+                self.stopAudio()
                 file = str(QFileDialog.getExistingDirectory(self, "Сохранить в"))
                 shutil.copy("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin()), file)
+                alert = QtWidgets.QMessageBox()
+                alert.setWindowTitle("Успешно")
+                alert.setText("Файл data.wav сохранен в {0}".format(file))
+                alert.exec_()
             else:
                 alert = QtWidgets.QMessageBox()
+                alert.setWindowTitle("Ошибка")
                 alert.setText("Сгенерированные файлы не найдены")
                 alert.exec_()
         except:

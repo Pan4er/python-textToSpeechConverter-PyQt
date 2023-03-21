@@ -37,7 +37,8 @@ def play():
     stop()
     mixer.init()
     mixer.music.load("c://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin()))
-    mixer.music.play()
+    mixer.music.play(loops=99999)
+
 
 
 def stop():
@@ -46,7 +47,6 @@ def stop():
         mixer.music.unload()
     else:
         pass
-    #os.remove("c://tmp/data.wav")
 
 def flushTemps():
     if os.path.exists("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin())):
@@ -58,4 +58,3 @@ def pause():
 
 def unpause():
     mixer.music.unpause()
-
