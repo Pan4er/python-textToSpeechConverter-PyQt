@@ -1,1 +1,2 @@
-# python-textToSpeechConverter-PyQt
+Синтезатор голоса из текста
+Pyqt + pyttx3
