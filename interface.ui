@@ -22,6 +22,9 @@
   <property name="windowTitle">
    <string>Taudio</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="documentMode">
    <bool>true</bool>
   </property>
@@ -78,6 +81,15 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QPushButton" name="loadFileBtnDocs">
+            <property name="font">
+             <font>
+              <family>Monotype Corsiva</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Загрузить текст</string>
             </property>
@@ -89,6 +101,15 @@
           </item>
           <item>
            <widget class="QPushButton" name="ClearBtnDocs">
+            <property name="font">
+             <font>
+              <family>Monotype Corsiva</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Очистить</string>
             </property>
@@ -100,6 +121,15 @@
           </item>
           <item>
            <widget class="QPushButton" name="playAudioBtnDocs">
+            <property name="font">
+             <font>
+              <family>Monotype Corsiva</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Проиграть аудио</string>
             </property>
@@ -111,6 +141,15 @@
           </item>
           <item>
            <widget class="QPushButton" name="stopAudioBtnDocs">
+            <property name="font">
+             <font>
+              <family>Monotype Corsiva</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Остановить аудио</string>
             </property>
@@ -122,6 +161,15 @@
           </item>
           <item>
            <widget class="QPushButton" name="saveAudioBtnDocs">
+            <property name="font">
+             <font>
+              <family>Monotype Corsiva</family>
+              <pointsize>16</pointsize>
+              <weight>50</weight>
+              <italic>true</italic>
+              <bold>false</bold>
+             </font>
+            </property>
             <property name="text">
              <string>Сохранить аудио</string>
             </property>
@@ -164,8 +212,34 @@
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
          <widget class="QLabel" name="label_3">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Monotype Corsiva</family>
+            <pointsize>36</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>Загрузка....</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial">
+          <property name="maximumSize">
+           <size>
+            <width>9999999</width>
+            <height>9999999</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -215,7 +289,7 @@
        </font>
       </property>
       <property name="currentText">
-       <string>WORD/PDF/TXT</string>
+       <string>WORD/PFD/Написать</string>
       </property>
       <property name="maxVisibleItems">
        <number>5</number>
@@ -228,7 +302,7 @@
       </property>
       <item>
        <property name="text">
-        <string>WORD/PDF/TXT</string>
+        <string>WORD/PFD/Написать</string>
        </property>
       </item>
       <item>

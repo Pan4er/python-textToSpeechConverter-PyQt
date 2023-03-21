@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, QTimer
 from PyQt5.QtWidgets import QFileDialog
 import getTextByWord
 import getTextByPdf
@@ -23,6 +23,31 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.playAudioBtnDocs.clicked.connect(self.playAudio)
         self.stopAudioBtnDocs.clicked.connect(self.stopAudio)
         self.saveAudioBtnDocs.clicked.connect(self.saveAudio)
+
+        self.loadingTimer = QTimer()
+        self.loadingTimer.setInterval(10)
+        self.loadingTimer.timeout.connect(self.dialSpin)
+        self.loadingTimer.start()
+
+        self.dialCw = True
+        self.dial.setEnabled(False)
+
+    def dialSpin(self):
+
+        if (self.dialCw):
+            if (self.dial.value() != 99):
+                self.dial.setValue(self.dial.value() + 1)
+            else:
+                self.dialCw = False
+        else:
+            if (self.dial.value() != 1):
+                self.dial.setValue(self.dial.value() - 1)
+            else:
+                self.dialCw = True
+
+
+
+
 
     def getTextFromFile(self):
         self.cleanText()
@@ -65,7 +90,7 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         if (self.plainTextEdit.toPlainText() != ""):
             self.worker = self.WavGenerationThread(self.plainTextEdit.toPlainText())
             self.worker.start()
-            self.stackedWidget.setCurrentIndex(1)
+            self.stackedWidget.setCurrentIndex(2)
             self.worker.finished.connect(self.threadFinishedEvent)
 
 
@@ -87,13 +112,17 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         tts.play()
 
     def saveAudio(self):
-        if os.path.exists("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin())):
-            file = str(QFileDialog.getExistingDirectory(self, "Сохранить в"))
-            shutil.copy("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin()), file)
-        else:
-            alert = QtWidgets.QMessageBox()
-            alert.setText("Сгенерированные файлы не найдены")
-            alert.exec_()
+        try:
+            if os.path.exists("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin())):
+                file = str(QFileDialog.getExistingDirectory(self, "Сохранить в"))
+                shutil.copy("C://users/{0}/tmpwavAoDev/data.wav".format(os.getlogin()), file)
+            else:
+                alert = QtWidgets.QMessageBox()
+                alert.setText("Сгенерированные файлы не найдены")
+                alert.exec_()
+        except:
+            pass
+
 
 
 
