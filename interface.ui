@@ -215,7 +215,7 @@
        </font>
       </property>
       <property name="currentText">
-       <string>WORD/PFD/Написать</string>
+       <string>WORD/PDF/TXT</string>
       </property>
       <property name="maxVisibleItems">
        <number>5</number>
@@ -228,7 +228,7 @@
       </property>
       <item>
        <property name="text">
-        <string>WORD/PFD/Написать</string>
+        <string>WORD/PDF/TXT</string>
        </property>
       </item>
       <item>

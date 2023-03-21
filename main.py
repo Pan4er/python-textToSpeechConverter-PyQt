@@ -3,6 +3,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QFileDialog
 import getTextByWord
+import getTextByPdf
+import getTextByTxt
 import design
 import os
 import shutil
@@ -26,7 +28,15 @@ class App(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.cleanText()
         try:
             fileLocation = QFileDialog.getOpenFileName(self, "Открыть файл", filter="Text files (*.docx *.pdf *.txt)")
-            self.plainTextEdit.setPlainText(getTextByWord.getText(fileLocation[0]))
+            file_name, file_extension = os.path.splitext(fileLocation[0])
+            if (file_extension == ".docx"):
+                self.plainTextEdit.setPlainText(getTextByWord.getText(fileLocation[0]))
+
+            elif (file_extension == ".txt"):
+                self.plainTextEdit.setPlainText(getTextByTxt.getTextFromTxt(fileLocation[0]))
+
+            elif (file_extension == ".pdf"):
+                self.plainTextEdit.setPlainText(getTextByPdf.getTextFromPdf(fileLocation[0]))
         except:
             pass
 
